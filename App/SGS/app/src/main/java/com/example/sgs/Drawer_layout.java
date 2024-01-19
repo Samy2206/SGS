@@ -11,13 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,6 +33,9 @@ public class Drawer_layout extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
+    TextView txtName,txtStudentClass;
+
+    FirebaseFirestore fstore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class Drawer_layout extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottomNavigation);
         drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.toolbar);
+        fstore = FirebaseFirestore.getInstance();
+
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.OpenDrawer,R.string.CloseDrawer);
@@ -60,21 +62,26 @@ public class Drawer_layout extends AppCompatActivity {
                 int id = item.getItemId();
                 if(id==R.id.dashboard)
                 {
-                   // loadFragment(new HomeFragment(),false);
-                    startActivity(new Intent(Drawer_layout.this,MainActivity.class));
-                } else if (id==R.id.logOut) {
+                    startActivity(new Intent(Drawer_layout.this, DashboardActivity.class));
+                } else if (id==R.id.subjectTracker)
+                {
+                    startActivity(new Intent(Drawer_layout.this, SubjectTrackerActivity.class));
+                } else if(id==R.id.taskScheduler)
+                {
+                    startActivity(new Intent(Drawer_layout.this, TaskSchedulerActivity.class));
+                } else if (id==R.id.feedback) {
+                    startActivity(new Intent(Drawer_layout.this, FeedbackActivity.class));
+                }else
+                {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(Drawer_layout.this, StartActivity.class));
                     finish();
-
-                } else
-                {
-                    loadFragment(new ProfileFragment(),false);
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
+        setProfile();
 
         bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -101,6 +108,40 @@ public class Drawer_layout extends AppCompatActivity {
         else
         ft.replace(R.id.containerX,fragment);
         ft.commit();
+    }
+
+    private void setProfile() {
+
+        View view = navigationView.getHeaderView(0);
+        txtName = view.findViewById(R.id.txtName);
+        txtStudentClass = view.findViewById(R.id.txtStudentClass);
+
+
+        String userID = FirebaseAuth.getInstance().getUid();
+        DocumentReference ref = fstore.collection("users").document(userID);
+        ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value != null && value.exists())
+                {
+                    String name = value.getString("name");
+                    txtName.setText(name);
+                    DocumentReference ref1 = fstore.collection("student info").document(name);
+                    ref1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(value != null && value.exists())
+                            {
+                                String studentClass = value.getString("class");
+                                txtStudentClass.setText(studentClass);
+
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
 }

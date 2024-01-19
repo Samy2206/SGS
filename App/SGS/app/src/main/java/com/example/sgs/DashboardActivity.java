@@ -2,19 +2,15 @@ package com.example.sgs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity{
+public class DashboardActivity extends AppCompatActivity{
     private Button btnLogOut;
     private FirebaseAuth auth;
     private FirebaseFirestore fstore;
@@ -22,7 +18,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dashboard);
         btnLogOut = findViewById(R.id.btnLogOut);
         fstore = FirebaseFirestore.getInstance();
 
