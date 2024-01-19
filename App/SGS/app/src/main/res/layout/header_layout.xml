@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/mainPrimaryColor">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/baseline_person_24"
+        app:civ_border_width="8dp"
+        app:civ_border_color="@color/mainPrimaryColor"
+        app:civ_circle_background_color="@color/mainPrimaryDarkColor"
+        android:layout_marginTop="40dp"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:id="@+id/txtName1"
+        android:textSize="22dp"
+        android:text="Name"
+        android:textColor="@color/black"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Class"
+        android:textSize="15dp"
+        android:id="@+id/txtStudentClass"
+        android:textColor="@color/black"
+    />
+
+</LinearLayout>

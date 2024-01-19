@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboard"
+        android:title="Dashboard"
+        android:icon="@drawable/dashboard"
+    />
+    <item
+        android:id="@+id/subjectTracker"
+        android:title="Subject Tracker"
+        android:icon="@drawable/books"
+    />
+    <item
+        android:id="@+id/taskScheduler"
+        android:title="Task Scheduler"
+        android:icon="@drawable/celander"
+    />
+    <item
+        android:id="@+id/feedback"
+        android:title="Feedback"
+        android:icon="@drawable/feedback_svgrepo_com"
+    />
+    <item
+        android:id="@+id/logOut"
+        android:title="Log Out"
+        android:icon="@drawable/baseline_logout_24"
+    />
+</menu>

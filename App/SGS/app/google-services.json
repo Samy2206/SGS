@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "388361630670",
+    "project_id": "sgsprj-d94f1",
+    "storage_bucket": "sgsprj-d94f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388361630670:android:69dfb31a3e15bdabb4319f",
+        "android_client_info": {
+          "package_name": "com.example.sgs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsxVQLM_qIFsEBWmiDRplbtjXqTmA2IZg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
