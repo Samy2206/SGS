@@ -28,6 +28,10 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
         android:id="@+id/navigationView"
+        app:itemRippleColor="@color/mainPrimaryDarkColor"
+        app:itemIconTint="@color/black"
+        android:background="@color/mainWindowBackground"
+        app:itemTextColor="@color/black"
     />
 
 </androidx.drawerlayout.widget.DrawerLayout>
