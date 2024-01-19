@@ -8,20 +8,26 @@
     tools:context=".Drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:id="@+id/drawerLayout">
+    android:id="@+id/drawerLayout"
+    >
 
-    <include layout="@layout/toolbar_layout"/>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+   >
+       <include layout="@layout/toolbar_layout"/>
+       <include layout="@layout/bottom_navigation"/>
+
+   </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:id="@+id/navigationView"
         app:menu="@menu/drawer_menu"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
+        android:id="@+id/navigationView"
     />
-    <include layout="@layout/bottom_nav_1"/>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

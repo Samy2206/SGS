@@ -29,11 +29,9 @@ public class MainActivity extends AppCompatActivity{
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = new String("Ajay Raut");
-
-                CollectionReference ref = fstore.collection("student info");
-                ref.document("name").delete();
-
+                auth.signOut();
+                startActivity(new Intent(getApplicationContext(), StartActivity.class));
+                finish();
             }
         });
 

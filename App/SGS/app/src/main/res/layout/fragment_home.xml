@@ -7,16 +7,16 @@
     tools:context=".HomeFragment"
     android:background="@color/mainPrimaryColor"
     android:orientation="vertical"
+    android:gravity="center"
     >
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:paddingTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recView"
-    />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="30dp"
+        />
 
 
 
