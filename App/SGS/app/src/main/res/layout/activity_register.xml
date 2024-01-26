@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:background="#fff"
+    android:background="@color/mainPrimaryColor"
     android:gravity="center">
 
     <ImageView
@@ -23,8 +23,6 @@
         app:cardCornerRadius="7dp"
         android:elevation="20dp"
         android:layout_margin="10dp"
-
-
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +30,7 @@
             android:orientation="vertical"
             android:background="@color/white"
             android:gravity="center"
-            android:backgroundTint="@color/mainPrimaryColor"
+            android:backgroundTint="@color/mainPrimaryDarkColor"
             >
             <EditText
                 android:layout_margin="20dp"
@@ -45,6 +43,8 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/white"
                 android:textSize="22dp"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawablePadding="20dp"
                 />
             <EditText
                 android:layout_margin="20dp"
@@ -57,6 +57,8 @@
                 android:background="@color/white"
                 android:inputType="textVisiblePassword"
                 android:textSize="22dp"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="20dp"
                 />
             <EditText
                 android:layout_margin="20dp"
@@ -69,6 +71,9 @@
                 android:background="@color/white"
                 android:inputType="textVisiblePassword"
                 android:textSize="22dp"
+                android:ems="16"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="20dp"
                 />
             <EditText
                 android:layout_margin="20dp"
@@ -81,6 +86,8 @@
                 android:background="@color/white"
                 android:inputType="textVisiblePassword"
                 android:textSize="22dp"
+                android:drawableLeft="@drawable/baseline_smartphone_24"
+                android:drawablePadding="20dp"
                 />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -93,8 +100,6 @@
                 android:text="Register"
                 android:textSize="22dp"
                 android:padding="5dp"
-
-
                 />
 
 

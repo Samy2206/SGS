@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="7dp"
+    app:cardUseCompatPadding="true"
+    android:id="@+id/cardGoal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/mainPrimaryDarkColor"
+        android:padding="7dp"
+    >
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Goal"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="left"
+
+            android:id="@+id/txtGoal"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:id="@+id/txtDescription"
+            android:layout_marginBottom="5dp"
+            android:textColor="#333333"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+        >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Date"
+                android:textSize="15dp"
+                android:padding="5dp"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"
+                android:layout_gravity="left"
+                android:id="@+id/txtDate"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Due"
+                android:textSize="15dp"
+                android:padding="5dp"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:id="@+id/txtDue"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/black"
+
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

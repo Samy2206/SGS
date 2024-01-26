@@ -1,50 +1,181 @@
 package com.example.sgs;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
-//
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//
-//    private String mParam1;
-//    private String mParam2;
+    private LottieAnimationView animStudy;
+    private FloatingActionButton btnAddGoal;
+    private ArrayList<Model_Goal> arrGoal = new ArrayList<>();
+   private RecyclerView recGoalHome;
+   private EditText edtGoal,edtDescription;
+    private TextView edtDate;
+    private Button btnAdd;
+    private FirebaseFirestore fstore;
+    private AdapterGoal adapter;
+    String userID = FirebaseAuth.getInstance().getUid();
+
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-//
-//    public static HomeFragment newInstance(String param1, String param2) {
-//        HomeFragment fragment = new HomeFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        recGoalHome = view.findViewById(R.id.recGoalHome);
+        btnAddGoal = view.findViewById(R.id.btnAddGoal);
+
+
+        /////////////////////////////////////////////////////////////////////////////////
+        studyAnim(view);
+        recGoalHome.setLayoutManager(new LinearLayoutManager(getContext()));
+        btnAddGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    openAddDialog();
+
+            }
+        });
+        retrievedata();
+
+
+        adapter = new AdapterGoal(arrGoal);
+        recGoalHome.setAdapter(adapter);
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        return view;
+    }
+
+
+
+    private void openAddDialog() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_add_goal);
+
+        edtGoal= dialog.findViewById(R.id.edtGoal);
+        edtDescription = dialog.findViewById(R.id.edtDescription);
+        edtDate = dialog.findViewById(R.id.edtDate);
+        btnAdd = dialog.findViewById(R.id.btnAdd);
+
+        edtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setdate();
+            }
+
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            String goal,description,date;
+            @Override
+            public void onClick(View v) {
+              if(edtGoal.getText().toString().isEmpty() || edtDescription.getText().toString().isEmpty() || edtDate.getText().toString().isEmpty())
+              {
+                  Toast.makeText(getContext(), "Please Enter The Information", Toast.LENGTH_SHORT).show();
+              }
+              else {
+                  goal = edtGoal.getText().toString();
+                  description = edtDescription.getText().toString();
+                  date = edtDate.getText().toString();
+              }
+              dialog.dismiss();
+
+              //upload new goal to database
+                fstore = FirebaseFirestore.getInstance();
+                DocumentReference documentReference = fstore.collection("Goals").document();
+                Map<String,Object> goalMap = new HashMap<>();
+                goalMap.put("goal",goal);
+                goalMap.put("description",description);
+                goalMap.put("date",date);
+                goalMap.put("id",documentReference);
+                goalMap.put("userId",userID);
+
+                documentReference.set(goalMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getContext(), "Goal Added Successfully", Toast.LENGTH_SHORT).show();
+                        adapter.notifyDataSetChanged();
+                        arrGoal.clear();
+                        retrievedata();
+                    }
+                });
+
+            }
+        });
+        dialog.show();
+
+    }
+
+    private void setdate() {
+        DatePickerDialog dateDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                edtDate.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+            }
+        }, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        dateDialog.show();
+    }
+    private void retrievedata() {
+        fstore = FirebaseFirestore.getInstance();
+        fstore.collection("Goals").whereEqualTo("userId",userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments(); //all docs from the collection are retrived
+                for(DocumentSnapshot d:list)
+                {
+                    Model_Goal model = d.toObject(Model_Goal.class);
+                    model.setDocRef(d.getReference());
+                    arrGoal.add(model);
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+    }
+
+
+    private void studyAnim(View view) {
+        animStudy = view.findViewById(R.id.animStudy);
+        animStudy.setAnimation(R.raw.study_animation);
+        animStudy.playAnimation();
     }
 }
