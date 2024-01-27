@@ -27,6 +27,7 @@ public class studentInfo extends AppCompatActivity {
 
     private FirebaseAuth fauth;
     private FirebaseFirestore fstore;
+    private final String userId = FirebaseAuth.getInstance().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class studentInfo extends AppCompatActivity {
         String email = bundle.getString("email");
         String phoneno = bundle.getString("phoneno");
 
-        DocumentReference db = fstore.collection("student info").document(name);
+        DocumentReference db = fstore.collection("student info").document(userId);
         Map<String,Object> stdData = new HashMap<>();
         stdData.put("name",name);
         stdData.put("email",email);

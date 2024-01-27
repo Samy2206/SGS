@@ -6,6 +6,12 @@
         <item name="colorAccent">@color/mainAccentColor</item>
         <item name="android:windowBackground">@color/mainWindowBackground</item>
     </style>
-
+    <style name="selectedDate">
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="weekColor">
+        <item name="android:textColor">#FB0000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="Theme.SGS" parent="Base.Theme.SGS" />
 </resources>

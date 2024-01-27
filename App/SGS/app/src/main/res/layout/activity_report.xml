@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReportActivity"
+    android:background="@color/mainPrimaryColor"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Report Issue and Problem"
+        android:background="@color/mainPrimaryDarkColor"
+        android:textSize="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+    />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name*"
+        android:id="@+id/edtName"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+    />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone No"
+        android:id="@+id/edtPhoneNo"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:layout_marginRight="5dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email*"
+        android:id="@+id/edtEmail"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@color/black"
+        />
+
+    <EditText
+        android:id="@+id/edtIssue"
+        android:layout_width="match_parent"
+        android:layout_height="401dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:hint="Please tell us about problem in detail"
+        android:gravity="start"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Submit"
+        android:textSize="20sp"
+        android:id="@+id/btnSubmit"
+        android:layout_marginTop="30dp"
+    />
+
+
+
+
+</LinearLayout>

@@ -22,6 +22,7 @@ public class DashboardActivity extends AppCompatActivity{
         btnLogOut = findViewById(R.id.btnLogOut);
         fstore = FirebaseFirestore.getInstance();
 
+        btnLogOut.setClickable(false);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

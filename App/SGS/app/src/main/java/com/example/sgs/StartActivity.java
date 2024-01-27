@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class StartActivity extends AppCompatActivity {
@@ -22,6 +23,10 @@ public class StartActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         auth = FirebaseAuth.getInstance();
+
+        LottieAnimationView animOpen = findViewById(R.id.anim);
+        animOpen.setAnimation(R.raw.start_activity_anim);
+        animOpen.playAnimation();
 
         if(auth.getCurrentUser() != null)
         {

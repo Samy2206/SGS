@@ -12,11 +12,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -26,16 +31,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class Drawer_layout extends AppCompatActivity {
 
-    NavigationView navigationView;
-    BottomNavigationView bottomNavigation;
-    DrawerLayout drawerLayout;
-    Toolbar toolbar;
-    TextView txtName,txtStudentClass;
-
-    FirebaseFirestore fstore;
+    private NavigationView navigationView;
+    private BottomNavigationView bottomNavigation;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private TextView txtName,txtStudentClass;
+    private ImageView imgProfile;
+    private FirebaseFirestore fstore;
+    private StorageReference sRef;
+    private String userId = FirebaseAuth.getInstance().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,8 @@ public class Drawer_layout extends AppCompatActivity {
         fstore = FirebaseFirestore.getInstance();
 
 
+        toolbar.setTitle("Welcome");
+        toolbar.setTitleMarginStart(40);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.OpenDrawer,R.string.CloseDrawer);
         toggle.syncState();
@@ -71,6 +82,9 @@ public class Drawer_layout extends AppCompatActivity {
                     startActivity(new Intent(Drawer_layout.this, TaskSchedulerActivity.class));
                 } else if (id==R.id.feedback) {
                     startActivity(new Intent(Drawer_layout.this, FeedbackActivity.class));
+                }else if(id==R.id.notes)
+                {
+                    startActivity(new Intent(Drawer_layout.this, NotesActivity.class));
                 }else
                 {
                     FirebaseAuth.getInstance().signOut();
@@ -90,8 +104,12 @@ public class Drawer_layout extends AppCompatActivity {
                 if(id==R.id.nav_home)
                 {
                  loadFragment(new HomeFragment(),false);
+                    toolbar.setTitle("Welcome");
+                    toolbar.setTitleMarginStart(40);
                 }else {
                     loadFragment(new ProfileFragment(),false);
+                    toolbar.setTitle("Profile");
+                    toolbar.setTitleMarginStart(40);
                 }
                 return true;
             }
@@ -115,8 +133,25 @@ public class Drawer_layout extends AppCompatActivity {
         View view = navigationView.getHeaderView(0);
         txtName = view.findViewById(R.id.txtName);
         txtStudentClass = view.findViewById(R.id.txtStudentClass);
+        imgProfile = view.findViewById(R.id.imgProfile);
 
+        //set profile picture
 
+        sRef = FirebaseStorage.getInstance().getReference("images/"+userId);
+        sRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(task.isSuccessful())
+                {
+                    Uri imgUri = task.getResult();
+                    Glide.with(Drawer_layout.this)
+                            .load(imgUri)
+                            .into(imgProfile);
+                }
+            }
+        });
+
+        //set profile name
         String userID = FirebaseAuth.getInstance().getUid();
         DocumentReference ref = fstore.collection("users").document(userID);
         ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -126,7 +161,7 @@ public class Drawer_layout extends AppCompatActivity {
                 {
                     String name = value.getString("name");
                     txtName.setText(name);
-                    DocumentReference ref1 = fstore.collection("student info").document(name);
+                    DocumentReference ref1 = fstore.collection("student info").document(userID);
                     ref1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {

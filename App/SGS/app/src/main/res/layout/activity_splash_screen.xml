@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Student Goal Scheduler"
         android:textSize="30dp"
-        android:textColor="@color/mainPrimaryColor"
+        android:textColor="@color/mainPrimaryDarkColor"
         android:id="@+id/txtSGS2"
     />
 

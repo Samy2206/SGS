@@ -3,10 +3,10 @@ package com.example.sgs;
 import com.google.firebase.firestore.DocumentReference;
 
 public class Model_Goal {
-    String goal;
-    String date;
-    String description;
-    DocumentReference docRef;
+    private String goal;
+    private String date;
+    private String description;
+    private DocumentReference docRef;
 
     public Model_Goal() {
     }

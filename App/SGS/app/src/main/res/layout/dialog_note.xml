@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/mainPrimaryDarkColor"
+            android:padding="5dp"
+        >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Note"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textAlignment="center"
+                android:layout_weight="9"
+            />
+                <ImageView
+                    android:paddingTop="3dp"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/baseline_arrow_right_alt_24"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:id="@+id/digbtnSave"
+                />
+            </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/digedtNoteName"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:hint="Name"
+                android:background="@color/white"
+                android:layout_marginBottom="10dp"
+            />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/digedtNoteContaint"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:hint="Description"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:gravity="start"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</LinearLayout>

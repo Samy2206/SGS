@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskSchedulerActivity">
+    tools:context=".TaskSchedulerActivity"
+    android:background="@color/mainPrimaryColor"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/calendarView"
+        android:background="@color/white"
+        android:dateTextAppearance="@style/selectedDate"
+        android:weekDayTextAppearance="@style/weekColor"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calendarView"
+        android:id="@+id/edit"
+        android:elevation="10dp"
+    >
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Add Task"
+        android:layout_marginTop="10dp"
+        android:textSize="22dp"
+        android:textColor="@color/black"
+        android:id="@+id/edtEvent"
+        android:background="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="3"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+    />
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Clear"
+        android:id="@+id/btnClear"
+        android:layout_marginTop="6dp"
+        android:background="@color/mainPrimaryDarkColor"
+        android:layout_marginRight="2dp"
+    />
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_24"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/btnAdd"
+    />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit"
+        android:id="@+id/listEvent"
+    />
+
+
+</RelativeLayout>

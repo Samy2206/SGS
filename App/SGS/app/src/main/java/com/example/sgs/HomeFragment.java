@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
     private Button btnAdd;
     private FirebaseFirestore fstore;
     private AdapterGoal adapter;
-    String userID = FirebaseAuth.getInstance().getUid();
+    private final String userID = FirebaseAuth.getInstance().getUid();
 
 
     public HomeFragment() {

@@ -24,10 +24,10 @@ import java.util.Locale;
 
 public class AdapterGoal extends RecyclerView.Adapter<AdapterGoal.ViewHolder> {
 
-    ArrayList<Model_Goal> arrGoal = new ArrayList<>();
-    FirebaseFirestore fstore = FirebaseFirestore.getInstance();
-    CollectionReference cRef = fstore.collection("Goals");
-    String due;
+    private ArrayList<Model_Goal> arrGoal = new ArrayList<>();
+    private FirebaseFirestore fstore = FirebaseFirestore.getInstance();
+    private CollectionReference cRef = fstore.collection("Goals");
+    private String due;
     public AdapterGoal(ArrayList<Model_Goal> arrGoal) {
         this.arrGoal = arrGoal;
     }
@@ -111,7 +111,7 @@ public class AdapterGoal extends RecyclerView.Adapter<AdapterGoal.ViewHolder> {
         delete.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d("###","Doc ref : "+arrGoal.get(position).docRef);
+               // Log.d("###","Doc ref : "+arrGoal.get(position).docRef);
                 String docId = arrGoal.get(position).getDocRef().getId();
                 DocumentReference dref =cRef.document(docId);
                 dref.delete();

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/mainPrimaryColor"
+    app:cardCornerRadius="5dp"
+    android:elevation="10dp"
+    app:cardUseCompatPadding="true"
+    android:id="@+id/cardNote"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/mainPrimaryDarkColor"
+        android:paddingLeft="5dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNoteName"
+        android:textSize="24sp"
+        android:hint="Name"
+        android:layout_margin="5dp"
+        android:paddingLeft="5dp"
+        android:textColor="#E48D0D"
+    />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNote"
+        android:textSize="20sp"
+        android:background="@color/white"
+        android:hint="Containt"
+        android:layout_margin="5dp"
+        android:paddingLeft="5dp"
+        android:textColor="@color/black"
+    />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
