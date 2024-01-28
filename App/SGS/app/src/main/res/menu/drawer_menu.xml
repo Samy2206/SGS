@@ -27,9 +27,18 @@
         android:icon="@drawable/baseline_notes_24"
         />
     <item
+        android:id="@+id/imgNote"
+        android:title="Image Notes"
+        android:icon="@drawable/baseline_photo_library_24"
+    />
+    <item
         android:id="@+id/logOut"
         android:title="Log Out"
         android:icon="@drawable/baseline_logout_24"
+    />
+    <item
+        android:title="Stop Noticaion"
+        android:id="@+id/notification"
     />
 
 </menu>

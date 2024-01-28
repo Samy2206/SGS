@@ -3,6 +3,7 @@ package com.example.sgs;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -11,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -57,12 +60,15 @@ public class Drawer_layout extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         fstore = FirebaseFirestore.getInstance();
 
-
         toolbar.setTitle("Welcome");
         toolbar.setTitleMarginStart(40);
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.OpenDrawer,R.string.CloseDrawer);
         toggle.syncState();
+
+
+        startNoticationService();       //Starts notification service
+        startNoticationService();
 
         loadFragment(new HomeFragment(),true);
 
@@ -85,6 +91,13 @@ public class Drawer_layout extends AppCompatActivity {
                 }else if(id==R.id.notes)
                 {
                     startActivity(new Intent(Drawer_layout.this, NotesActivity.class));
+                }else if(id==R.id.imgNote)
+                {
+                    startActivity(new Intent(Drawer_layout.this, Photo_Notes_Activity.class));
+                }else if(id==R.id.notification)
+                {
+                    Intent serviceIntent = new Intent(Drawer_layout.this, NotificationService.class);
+                    stopService(serviceIntent);
                 }else
                 {
                     FirebaseAuth.getInstance().signOut();
@@ -116,6 +129,11 @@ public class Drawer_layout extends AppCompatActivity {
         });
 
 
+    }
+
+    private void startNoticationService() {
+            Intent serviceIntent = new Intent(Drawer_layout.this, NotificationService.class);
+            startService(serviceIntent);
     }
 
     private void loadFragment(Fragment fragment,boolean b) {
@@ -179,4 +197,31 @@ public class Drawer_layout extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else
+        {
+            AlertDialog.Builder exit = new AlertDialog.Builder(Drawer_layout.this)
+                    .setTitle("Exit")
+                    .setMessage("Do you want to exit app")
+                    .setIcon(R.drawable.exit_alert_icon)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Drawer_layout.super.onBackPressed();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            exit.show();
+        }
+    }
 }

@@ -123,6 +123,7 @@ public class NotesActivity extends AppCompatActivity {
                     model.setDocRef(d.getReference());
                     arrNotes.add(model);
                 }
+
                 adapter.notifyDataSetChanged();
             }
         });
