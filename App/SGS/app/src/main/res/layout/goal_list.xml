@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/mainPrimaryDarkColor"
+        android:background="#80ABE3"
         android:padding="7dp"
     >
         <TextView
@@ -55,6 +55,20 @@
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/black"
                 android:layout_weight="1"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due in:  "
+                android:textSize="15dp"
+                android:padding="5dp"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/black"
+                android:textAlignment="viewEnd"
 
                 />
             <TextView

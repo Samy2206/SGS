@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -23,7 +24,7 @@ import androidx.core.content.res.ResourcesCompat;
 public class NotificationService extends Service {
     private static final int NOTIFICATION_ID = 1;
     private static final String CHANNEL_ID = "ForegroundServiceChannel";
-    private static final long NOTIFICATION_INTERVAL = 2 * 60 * 60 * 1000; // 10 seconds
+    private static final long NOTIFICATION_INTERVAL = 2 *60 * 60 * 1000; // 10 seconds
 
     private Handler handler;
 
@@ -69,13 +70,14 @@ public class NotificationService extends Service {
         // Create an explicit intent for the app's main activity
         Intent notificationIntent = new Intent(this, Drawer_layout.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        notificationIntent.setAction("OPEN_FRAGMENT");
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this,
                 0,
                 notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT |
-                PendingIntent.FLAG_IMMUTABLE
+                        PendingIntent.FLAG_IMMUTABLE
         );
 
         // Build the notification
@@ -106,6 +108,8 @@ public class NotificationService extends Service {
     }
 
     private void showNotification() {
+        Log.d("NotificationService", "Notification scheduled");
+
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         if (notificationManager != null) {
             notificationManager.notify(NOTIFICATION_ID, buildNotification());

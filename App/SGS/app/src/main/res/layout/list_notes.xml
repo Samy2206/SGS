@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtNote"
         android:textSize="20sp"
-        android:background="@color/white"
+        android:background="#A1B1F7"
         android:hint="Containt"
         android:layout_margin="5dp"
         android:paddingLeft="5dp"

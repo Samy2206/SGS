@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotesActivity">
+    tools:context=".NotesActivity"
+    android:background="@drawable/blur_pink_blue">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

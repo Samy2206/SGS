@@ -4,7 +4,7 @@
         <item name="android:colorPrimary">@color/mainPrimaryColor</item>
         <item name="colorPrimaryDark">@color/mainPrimaryDarkColor</item>
         <item name="colorAccent">@color/mainAccentColor</item>
-        <item name="android:windowBackground">@color/mainWindowBackground</item>
+        <item name="android:windowBackground">@drawable/blur_pink_blue</item>
     </style>
     <style name="selectedDate">
         <item name="android:textColor">@color/black</item>

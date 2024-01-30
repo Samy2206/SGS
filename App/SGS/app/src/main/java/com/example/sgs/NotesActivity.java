@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,7 @@ public class NotesActivity extends AppCompatActivity {
     private ArrayList<modelNotes> arrNotes = new ArrayList<modelNotes>();
     private final String userId = FirebaseAuth.getInstance().getUid();
     private AdapterNotes adapter;
+    SharedPreferences pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,8 @@ public class NotesActivity extends AppCompatActivity {
         recNotes = findViewById(R.id.recNotes);
         btnAdd = findViewById(R.id.btnAdd);
         fstore = FirebaseFirestore.getInstance();
+        pref =getSharedPreferences("numberValues",MODE_PRIVATE);
+
 
         recNotes.setLayoutManager(new LinearLayoutManager(this));
 
@@ -89,6 +93,7 @@ public class NotesActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        dialog.dismiss();
 
                     }
                 });
@@ -123,7 +128,6 @@ public class NotesActivity extends AppCompatActivity {
                     model.setDocRef(d.getReference());
                     arrNotes.add(model);
                 }
-
                 adapter.notifyDataSetChanged();
             }
         });

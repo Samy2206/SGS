@@ -1,5 +1,14 @@
 package com.example.sgs;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,16 +20,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,7 +42,7 @@ public class Drawer_layout extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    private TextView txtName,txtStudentClass;
+    private TextView txtName, txtStudentClass;
     private ImageView imgProfile;
     private FirebaseFirestore fstore;
     private StorageReference sRef;
@@ -63,43 +62,31 @@ public class Drawer_layout extends AppCompatActivity {
         toolbar.setTitle("Welcome");
         toolbar.setTitleMarginStart(40);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.OpenDrawer,R.string.CloseDrawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.OpenDrawer, R.string.CloseDrawer);
         toggle.syncState();
 
+        startNotificationService();
 
-        startNoticationService();       //Starts notification service
-        startNoticationService();
-
-        loadFragment(new HomeFragment(),true);
-
+        loadFragment(new HomeFragment(), true);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if(id==R.id.dashboard)
-                {
+                if (id == R.id.dashboard) {
                     startActivity(new Intent(Drawer_layout.this, DashboardActivity.class));
-                } else if (id==R.id.subjectTracker)
-                {
-                    startActivity(new Intent(Drawer_layout.this, SubjectTrackerActivity.class));
-                } else if(id==R.id.taskScheduler)
-                {
+                } else if (id == R.id.taskScheduler) {
                     startActivity(new Intent(Drawer_layout.this, TaskSchedulerActivity.class));
-                } else if (id==R.id.feedback) {
+                } else if (id == R.id.feedback) {
                     startActivity(new Intent(Drawer_layout.this, FeedbackActivity.class));
-                }else if(id==R.id.notes)
-                {
+                } else if (id == R.id.notes) {
                     startActivity(new Intent(Drawer_layout.this, NotesActivity.class));
-                }else if(id==R.id.imgNote)
-                {
+                } else if (id == R.id.imgNote) {
                     startActivity(new Intent(Drawer_layout.this, Photo_Notes_Activity.class));
-                }else if(id==R.id.notification)
-                {
+                } else if (id == R.id.notification) {
                     Intent serviceIntent = new Intent(Drawer_layout.this, NotificationService.class);
                     stopService(serviceIntent);
-                }else
-                {
+                } else {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(Drawer_layout.this, StartActivity.class));
                     finish();
@@ -114,53 +101,51 @@ public class Drawer_layout extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if(id==R.id.nav_home)
-                {
-                 loadFragment(new HomeFragment(),false);
+                if (id == R.id.nav_home) {
+                    loadFragment(new HomeFragment(), false);
                     toolbar.setTitle("Welcome");
                     toolbar.setTitleMarginStart(40);
-                }else {
-                    loadFragment(new ProfileFragment(),false);
+                } else if(id == R.id.nav_profile){
+                    loadFragment(new ProfileFragment(), false);
                     toolbar.setTitle("Profile");
+                    toolbar.setTitleMarginStart(40);
+                }else {
+                    loadFragment(new TimerFragment(),false);
+                    toolbar.setTitle("Timer");
                     toolbar.setTitleMarginStart(40);
                 }
                 return true;
             }
         });
-
-
     }
 
-    private void startNoticationService() {
-            Intent serviceIntent = new Intent(Drawer_layout.this, NotificationService.class);
-            startService(serviceIntent);
+    private void startNotificationService() {
+        Intent serviceIntent = new Intent(Drawer_layout.this, NotificationService.class);
+        startService(serviceIntent);
     }
 
-    private void loadFragment(Fragment fragment,boolean b) {
+    private void loadFragment(Fragment fragment, boolean b) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if(b)
-        ft.add(R.id.containerX,fragment);
+        if (b)
+            ft.add(R.id.containerX, fragment);
         else
-        ft.replace(R.id.containerX,fragment);
+            ft.replace(R.id.containerX, fragment);
         ft.commit();
     }
 
     private void setProfile() {
-
         View view = navigationView.getHeaderView(0);
         txtName = view.findViewById(R.id.txtName);
         txtStudentClass = view.findViewById(R.id.txtStudentClass);
         imgProfile = view.findViewById(R.id.imgProfile);
 
-        //set profile picture
-
-        sRef = FirebaseStorage.getInstance().getReference("images/"+userId);
+        // Set profile picture
+        sRef = FirebaseStorage.getInstance().getReference("images/" + userId);
         sRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     Uri imgUri = task.getResult();
                     Glide.with(Drawer_layout.this)
                             .load(imgUri)
@@ -169,42 +154,35 @@ public class Drawer_layout extends AppCompatActivity {
             }
         });
 
-        //set profile name
+        // Set profile name
         String userID = FirebaseAuth.getInstance().getUid();
         DocumentReference ref = fstore.collection("users").document(userID);
         ref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(value != null && value.exists())
-                {
+                if (value != null && value.exists()) {
                     String name = value.getString("name");
                     txtName.setText(name);
                     DocumentReference ref1 = fstore.collection("student info").document(userID);
                     ref1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
                         public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if(value != null && value.exists())
-                            {
+                            if (value != null && value.exists()) {
                                 String studentClass = value.getString("class");
                                 txtStudentClass.setText(studentClass);
-
                             }
                         }
                     });
                 }
             }
         });
-
     }
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else
-        {
+        } else {
             AlertDialog.Builder exit = new AlertDialog.Builder(Drawer_layout.this)
                     .setTitle("Exit")
                     .setMessage("Do you want to exit app")
@@ -224,4 +202,5 @@ public class Drawer_layout extends AppCompatActivity {
             exit.show();
         }
     }
+
 }

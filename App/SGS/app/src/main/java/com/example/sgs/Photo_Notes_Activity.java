@@ -155,6 +155,7 @@ public class Photo_Notes_Activity extends AppCompatActivity implements AdapterPh
                                     // Handle failure to get download URL
                                 }
                             });
+                            arrPhoto.size();
                         }
                     }
                 })

@@ -1,7 +1,10 @@
 package com.example.sgs;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +51,8 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore fstore;
     private AdapterGoal adapter;
     private final String userID = FirebaseAuth.getInstance().getUid();
-
+    private int noGoals;
+    SharedPreferences pref;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,6 +64,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recGoalHome = view.findViewById(R.id.recGoalHome);
         btnAddGoal = view.findViewById(R.id.btnAddGoal);
+        pref =getContext().getSharedPreferences("numberValues",MODE_PRIVATE);
 
 
         /////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +80,8 @@ public class HomeFragment extends Fragment {
         retrievedata();
 
 
-        adapter = new AdapterGoal(arrGoal);
+        adapter = new AdapterGoal(arrGoal,getContext());
+        adapter.resetDueTomorrow();
         recGoalHome.setAdapter(adapter);
 
 
@@ -132,6 +139,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(getContext(), "Goal Added Successfully", Toast.LENGTH_SHORT).show();
+                        adapter.resetDueTomorrow();
                         adapter.notifyDataSetChanged();
                         arrGoal.clear();
                         retrievedata();
@@ -164,8 +172,17 @@ public class HomeFragment extends Fragment {
                     Model_Goal model = d.toObject(Model_Goal.class);
                     model.setDocRef(d.getReference());
                     arrGoal.add(model);
+                    Log.d("NoGaols: ", String.valueOf(noGoals));
+                    noGoals++;
                 }
+                noGoals = arrGoal.size(); // Update noGoals with the size of the list
+                Log.d("NoGoals: ", String.valueOf(noGoals));
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putInt("noGoals", noGoals);
+                editor.apply(); // Use apply() to persist the changes asynchronously
+                adapter.resetDueTomorrow();
                 adapter.notifyDataSetChanged();
+                adapter.deleteDueGoals();
             }
         });
 
